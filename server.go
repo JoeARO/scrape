@@ -24,6 +24,6 @@ func server() {
 	go getPosts(url)
 	router := httprouter.New()
 	router.GET("/", Index)
-	router.GET("/posts/:id", PostIndex)
+	router.GET("/posts/", PostIndex)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

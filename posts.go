@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
 	"learning/scrape/types"
 )
@@ -41,7 +42,7 @@ func getPosts(url string) *types.ApiResponse {
 		}
 		fmt.Printf("%+v\n", posts)
 		return posts
-		time.Sleep(time.minute * 5)
+		time.Sleep(time.Minute * 5)
 	}
 }
 
