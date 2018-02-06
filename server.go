@@ -1,29 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"github.com/julienschmidt/httprouter"
+	"encoding/json"
+	"github.com/gorilla/mux"
+	"learning/scrape/types"
 	"log"
 	"net/http"
 )
 
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprint(w, "Welcome!\n")
-}
-
-func PostIndex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprint(w, "Posts Index")
-}
-
-func PostShow(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("id"))
+func Index(w http.ResponseWriter, r *http.Request) {
+	url := "https://www.reddit.com/.json"
+	p := make(chan *types.ApiResponse)
+	go getPosts(url, p)
+	json.NewEncoder(w).Encode(p)
 }
 
 func server() {
-	url := "https://www.reddit.com/.json"
-	go getPosts(url)
-	router := httprouter.New()
-	router.GET("/", Index)
-	router.GET("/posts/", PostIndex)
+	router := mux.NewRouter()
+	router.HandleFunc("/", Index)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

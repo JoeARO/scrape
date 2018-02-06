@@ -1,5 +1,7 @@
 package types
 
+type Posts []Post
+
 type Post struct {
 	Kind string   `json:"kind"`
 	Data PostData `json:"data"`
