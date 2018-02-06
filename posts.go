@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"learning/webscraper/types"
+	"learning/scrape/types"
 )
 
 func getPosts(url string) *types.ApiResponse {
