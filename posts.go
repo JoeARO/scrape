@@ -11,7 +11,9 @@ import (
 	"learning/scrape/types"
 )
 
-func getPosts(url string, p chan *types.ApiResponse) *types.ApiResponse {
+var Posts *types.ApiResponse
+
+func getPosts(url string) {
 	for {
 		// Create client so I can set User Agent for reddit API
 		client := &http.Client{}
@@ -40,7 +42,7 @@ func getPosts(url string, p chan *types.ApiResponse) *types.ApiResponse {
 		if err != nil {
 			panic(fmt.Errorf("No Posts!"))
 		}
-		p <- posts
+		Posts = posts
 		time.Sleep(time.Minute * 5)
 	}
 }
