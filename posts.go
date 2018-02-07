@@ -12,7 +12,6 @@ import (
 )
 
 func getPosts(url string, p chan *types.ApiResponse) *types.ApiResponse {
-	c := make(chan *types.ApiResponse)
 	for {
 		// Create client so I can set User Agent for reddit API
 		client := &http.Client{}
@@ -41,8 +40,7 @@ func getPosts(url string, p chan *types.ApiResponse) *types.ApiResponse {
 		if err != nil {
 			panic(fmt.Errorf("No Posts!"))
 		}
-		fmt.Printf("%+v\n", posts)
-		c <- posts
+		p <- posts
 		time.Sleep(time.Minute * 5)
 	}
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"learning/scrape/types"
 	"log"
@@ -12,7 +13,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	url := "https://www.reddit.com/.json"
 	p := make(chan *types.ApiResponse)
 	go getPosts(url, p)
-	json.NewEncoder(w).Encode(p)
+	posts := json.NewEncoder(w).Encode(p)
+	fmt.Fprintln(w, posts)
 }
 
 func server() {
